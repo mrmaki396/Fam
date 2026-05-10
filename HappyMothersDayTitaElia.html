@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Mother's Day, Tita Elia! 💜</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --v0: #faf8ff;
+        --v1: #ede9ff;
+        --v2: #d4c9ff;
+        --v3: #b4a0f5;
+        --v4: #8f6fe8;
+        --v5: #6b3fd4;
+        --v6: #4e28a8;
+        --v7: #321a7a;
+        --v8: #1a0d4a;
+        --lavender: #c4b5f5;
+        --lilac: #e8d5f5;
+        --orchid: #9b59b6;
+        --mauve: #7d3c98;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--v8);
+        color: var(--v1);
+        min-height: 100vh;
+        overflow-x: hidden;
+        cursor: default;
+      }
+
+      /* Starfield */
+      .stars {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle var(--d, 3s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+        opacity: 0.6;
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.1;
+          transform: scale(0.8);
+        }
+        50% {
+          opacity: 0.8;
+          transform: scale(1.2);
+        }
+      }
+
+      /* Hero */
+      .hero {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .petal-ring {
+        position: absolute;
+        width: 480px;
+        height: 480px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: rotateRing 30s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes rotateRing {
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      .petal {
+        position: absolute;
+        width: 60px;
+        height: 90px;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        top: 50%;
+        left: 50%;
+        transform-origin: 0 -200px;
+        opacity: 0.25;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .from-label {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--lavender);
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.3s;
+      }
+
+      .hero-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(3.5rem, 10vw, 7rem);
+        font-weight: 300;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: white;
+        opacity: 0;
+        animation: fadeUp 0.9s ease forwards 0.5s;
+        text-shadow: 0 0 80px rgba(180, 160, 245, 0.3);
+      }
+
+      .hero-title em {
+        font-style: italic;
+        color: var(--lavender);
+      }
+
+      .hero-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 6vw, 4rem);
+        font-weight: 600;
+        font-style: italic;
+        color: var(--v3);
+        margin-top: 0.25rem;
+        opacity: 0;
+        animation: fadeUp 0.9s ease forwards 0.7s;
+      }
+
+      .hero-tagline {
+        font-size: 1rem;
+        font-weight: 300;
+        color: var(--v2);
+        margin-top: 2rem;
+        max-width: 380px;
+        line-height: 1.8;
+        opacity: 0;
+        animation: fadeUp 0.9s ease forwards 0.9s;
+      }
+
+      .scroll-cue {
+        position: absolute;
+        bottom: 2.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 1.4s;
+        cursor: pointer;
+        z-index: 2;
+      }
+
+      .scroll-cue span {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        color: var(--lavender);
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+      }
+
+      .scroll-arrow {
+        width: 24px;
+        height: 24px;
+        border-right: 1.5px solid var(--lavender);
+        border-bottom: 1.5px solid var(--lavender);
+        transform: rotate(45deg);
+        margin: 0 auto;
+        animation: bounce 1.5s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: rotate(45deg) translate(0, 0);
+        }
+        50% {
+          transform: rotate(45deg) translate(4px, 4px);
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Flower garden section */
+      .garden-section {
+        position: relative;
+        z-index: 1;
+        padding: 6rem 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .section-eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--lavender);
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 300;
+        color: white;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+      }
+
+      .section-title em {
+        font-style: italic;
+        color: var(--v3);
+      }
+
+      .section-body {
+        font-size: 1rem;
+        font-weight: 300;
+        color: var(--v2);
+        line-height: 1.9;
+        max-width: 540px;
+        margin: 0 auto 3rem;
+      }
+
+      /* Interactive flower */
+      .flower-stage {
+        position: relative;
+        width: 320px;
+        height: 320px;
+        margin: 0 auto 2rem;
+        cursor: pointer;
+      }
+
+      .flower-stage:hover .flower-petal {
+        filter: brightness(1.15);
+      }
+
+      .flower-center {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background: radial-gradient(circle, #f9e784, #f0c040);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        box-shadow: 0 0 30px rgba(240, 192, 64, 0.4);
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+      }
+
+      .flower-stage:hover .flower-center {
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+
+      .flower-petal {
+        position: absolute;
+        width: 70px;
+        height: 110px;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        top: 50%;
+        left: 50%;
+        transform-origin: 50% 100%;
+        transform: translateX(-50%) translateY(-100%) rotate(var(--rot));
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .flower-stage:hover .flower-petal {
+        transform: translateX(-50%) translateY(-105%) rotate(var(--rot))
+          scale(1.08);
+      }
+
+      .petal-msg {
+        position: absolute;
+        background: rgba(14, 7, 50, 0.92);
+        border: 1px solid var(--v4);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: var(--v1);
+        max-width: 220px;
+        text-align: left;
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        z-index: 20;
+        white-space: normal;
+      }
+
+      .petal-msg.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .petal-msg strong {
+        display: block;
+        color: var(--lavender);
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+      }
+
+      /* Wishes section */
+      .wishes-section {
+        position: relative;
+        z-index: 1;
+        padding: 5rem 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .wishes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
+        margin-top: 3rem;
+      }
+
+      .wish-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(180, 160, 245, 0.2);
+        border-radius: 16px;
+        padding: 1.75rem 1.5rem;
+        transition: all 0.35s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .wish-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(143, 111, 232, 0.1),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.35s ease;
+      }
+
+      .wish-card:hover {
+        border-color: var(--v4);
+        transform: translateY(-4px);
+      }
+      .wish-card:hover::before {
+        opacity: 1;
+      }
+
+      .wish-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .wish-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--lavender);
+        margin-bottom: 0.5rem;
+      }
+
+      .wish-text {
+        font-size: 0.85rem;
+        font-weight: 300;
+        color: var(--v2);
+        line-height: 1.7;
+      }
+
+      /* Message box */
+      .message-section {
+        position: relative;
+        z-index: 1;
+        padding: 5rem 2rem;
+        max-width: 680px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .message-box {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(180, 160, 245, 0.25);
+        border-radius: 20px;
+        padding: 3rem 2.5rem;
+        margin-top: 3rem;
+        position: relative;
+      }
+
+      .message-box::before {
+        content: "\201C";
+        font-family: "Cormorant Garamond", serif;
+        font-size: 8rem;
+        color: var(--v5);
+        position: absolute;
+        top: -1rem;
+        left: 1.5rem;
+        line-height: 1;
+        opacity: 0.4;
+      }
+
+      .message-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.5rem;
+        font-style: italic;
+        font-weight: 300;
+        color: var(--v1);
+        line-height: 1.7;
+        position: relative;
+        z-index: 1;
+      }
+
+      .message-from {
+        margin-top: 1.5rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        color: var(--lavender);
+        text-transform: uppercase;
+      }
+
+      /* Fireworks / confetti button */
+      .celebrate-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: linear-gradient(135deg, var(--v5), var(--v4));
+        border: none;
+        border-radius: 50px;
+        padding: 0.9rem 2rem;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: white;
+        cursor: pointer;
+        margin-top: 2.5rem;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 30px rgba(107, 63, 212, 0.35);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .celebrate-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--v4), var(--v3));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .celebrate-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(107, 63, 212, 0.5);
+      }
+      .celebrate-btn:hover::after {
+        opacity: 1;
+      }
+      .celebrate-btn span {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Confetti particle */
+      .confetti-particle {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        border-radius: 2px;
+        pointer-events: none;
+        z-index: 9999;
+        animation: confettiFall var(--dur) ease-out forwards;
+      }
+
+      @keyframes confettiFall {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--tx), 80vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      /* Footer */
+      .footer {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 3rem 2rem;
+        border-top: 1px solid rgba(180, 160, 245, 0.1);
+      }
+
+      .footer-heart {
+        font-size: 2rem;
+        display: block;
+        margin-bottom: 0.75rem;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.15);
+        }
+      }
+
+      .footer-text {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        color: var(--v3);
+        text-transform: uppercase;
+      }
+
+      /* Divider */
+      .divider {
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--v4), transparent);
+        margin: 0 auto 2rem;
+      }
+
+      /* Reveal animation */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.8s ease,
+          transform 0.8s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Stars -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Hero -->
+    <section class="hero">
+      <!-- Orbiting petals ring -->
+      <div class="petal-ring" id="petalRing"></div>
+
+      <div class="hero-content">
+        <p class="from-label">A message of love</p>
+        <h1 class="hero-title">Happy<br /><em>Mother's</em> Day</h1>
+        <p class="hero-name">Tita Elia 💜</p>
+        <p class="hero-tagline">
+          From Paris with love — and from the Philippines with all our hearts.
+          Merci, Tita. We love you endlessly. 🇫🇷🇵🇭
+        </p>
+      </div>
+
+      <div
+        class="scroll-cue"
+        onclick="
+          document
+            .getElementById('garden')
+            .scrollIntoView({ behavior: 'smooth' })
+        ">
+        <span>Scroll</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!-- Flower Garden -->
+    <section class="garden-section" id="garden">
+      <div class="reveal">
+        <p class="section-eyebrow">For you</p>
+        <div class="divider"></div>
+        <h2 class="section-title">A <em>flower</em> just for you</h2>
+        <p class="section-body">
+          Hover over each petal to discover a special message hidden inside —
+          every one is a tiny token of how much you mean to us.
+        </p>
+      </div>
+
+      <div class="flower-stage" id="flowerStage">
+        <div class="flower-center" id="flowerCenter">🌸</div>
+        <div class="petal-msg" id="petalMsg">
+          <strong>✨ For you</strong>
+          <span id="petalMsgText">Click a petal...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wishes -->
+    <section class="wishes-section">
+      <div class="reveal" style="text-align: center">
+        <p class="section-eyebrow">With all our hearts</p>
+        <div class="divider"></div>
+        <h2 class="section-title">Wishes for <em>you</em></h2>
+      </div>
+
+      <div class="wishes-grid">
+        <div
+          class="wish-card reveal"
+          onclick="
+            this.style.borderColor = '#8f6fe8';
+            this.style.transform = 'scale(1.03)';
+          ">
+          <span class="wish-icon">🗼</span>
+          <div class="wish-title">La Vie en France</div>
+          <p class="wish-text">
+            May your life in France be as beautiful as you make ours feel — full
+            of light, warmth, and all the finest things.
+          </p>
+        </div>
+        <div
+          class="wish-card reveal"
+          onclick="
+            this.style.borderColor = '#8f6fe8';
+            this.style.transform = 'scale(1.03)';
+          ">
+          <span class="wish-icon">✈️</span>
+          <div class="wish-title">Safe Travels Home</div>
+          <p class="wish-text">
+            Every time you fly back to the Philippines, our hearts skip. May
+            your journeys always be safe and your arrivals joyful.
+          </p>
+        </div>
+        <div
+          class="wish-card reveal"
+          onclick="
+            this.style.borderColor = '#8f6fe8';
+            this.style.transform = 'scale(1.03)';
+          ">
+          <span class="wish-icon">🌟</span>
+          <div class="wish-title">Endless Blessings</div>
+          <p class="wish-text">
+            You always find ways to show us you care, no matter the distance.
+            May every kindness you've ever given come back to you a hundredfold.
+          </p>
+        </div>
+        <div
+          class="wish-card reveal"
+          onclick="
+            this.style.borderColor = '#8f6fe8';
+            this.style.transform = 'scale(1.03)';
+          ">
+          <span class="wish-icon">💜</span>
+          <div class="wish-title">Love Across Oceans</div>
+          <p class="wish-text">
+            From the Philippines to France and back — our love for you crosses
+            every distance, every timezone, every single day.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Distance section -->
+    <section
+      style="
+        position: relative;
+        z-index: 1;
+        padding: 4rem 2rem;
+        max-width: 760px;
+        margin: 0 auto;
+      ">
+      <div class="reveal" style="text-align: center; margin-bottom: 2.5rem">
+        <p class="section-eyebrow">Two countries, one heart</p>
+        <div class="divider"></div>
+        <h2 class="section-title">
+          France 🇫🇷 &nbsp;→&nbsp; <em>Pilipinas</em> 🇵🇭
+        </h2>
+        <p class="section-body">
+          11,000 km. One flight. And yet your love makes that distance feel like
+          nothing at all.
+        </p>
+      </div>
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1rem;
+        ">
+        <div class="wish-card reveal" style="text-align: center">
+          <span class="wish-icon">🌸</span>
+          <div class="wish-title">Always Thinking of Us</div>
+          <p class="wish-text">
+            No matter how busy life in France gets, you always make time to
+            reach out, check in, and remind us that we're loved.
+          </p>
+        </div>
+        <div class="wish-card reveal" style="text-align: center">
+          <span class="wish-icon">🏡</span>
+          <div class="wish-title">Coming Home</div>
+          <p class="wish-text">
+            When you visit the Philippines, the whole family lights up. Those
+            moments are some of our most treasured memories.
+          </p>
+        </div>
+        <div class="wish-card reveal" style="text-align: center">
+          <span class="wish-icon">💌</span>
+          <div class="wish-title">Bridging the Gap</div>
+          <p class="wish-text">
+            Whether near or far, you make sure we never feel forgotten. That is
+            something only the most loving people do.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Message -->
+    <section class="message-section">
+      <div class="reveal" style="text-align: center">
+        <p class="section-eyebrow">From the heart</p>
+        <div class="divider"></div>
+        <h2 class="section-title">Our <em>letter</em> to you</h2>
+      </div>
+
+      <div class="message-box reveal">
+        <p class="message-text">
+          Tita Elia, you are living across the world in France — yet somehow,
+          you have never once felt far away. Every gift you send, every time you
+          make the long journey home to the Philippines, every message you send
+          — it all says the same thing: that you love us, and that no ocean is
+          ever too wide for that love. Thank you for always remembering us, for
+          your generosity that knows no border, and for making us feel so lucky
+          to call you ours. Bonne fête, Tita. We love you from here to Paris and
+          back. 💜
+        </p>
+        <p class="message-from">— With all our love, always 💜</p>
+      </div>
+
+      <button class="celebrate-btn" onclick="launchConfetti()">
+        <span>💜 Celebrate Tita Elia!</span>
+      </button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="footer-heart">💜</span>
+      <p class="footer-text">Bonne fête, Tita Elia · Mahal ka namin · 💜 ·</p>
+    </footer>
+
+    <script>
+      // Starfield
+      const starsEl = document.getElementById("stars");
+      for (let i = 0; i < 120; i++) {
+        const s = document.createElement("div");
+        s.className = "star";
+        s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;--d:${2 + Math.random() * 4}s;--delay:${Math.random() * 5}s;opacity:${0.2 + Math.random() * 0.6}`;
+        if (Math.random() > 0.85) {
+          s.style.width = s.style.height = "3px";
+        }
+        starsEl.appendChild(s);
+      }
+
+      // Orbiting petal ring
+      const ring = document.getElementById("petalRing");
+      const colors = [
+        "#8f6fe8",
+        "#b4a0f5",
+        "#6b3fd4",
+        "#c4b5f5",
+        "#a78bfa",
+        "#7c3aed",
+        "#d8b4fe",
+        "#9333ea",
+      ];
+      for (let i = 0; i < 12; i++) {
+        const p = document.createElement("div");
+        p.className = "petal";
+        p.style.cssText = `background:${colors[i % colors.length]};--rot:${i * 30}deg;transform:translateX(-50%) translateY(-100%) rotate(${i * 30}deg)`;
+        ring.appendChild(p);
+      }
+
+      // Interactive flower
+      const petalData = [
+        {
+          label: "La Belle France 🇫🇷",
+          msg: "All the way from France, your love still reaches us here in the Philippines — across oceans, time zones, and all.",
+        },
+        {
+          label: "Your Visits 🇵🇭",
+          msg: "Every time you come home to the Philippines, it feels like a holiday. We count the days until we see your face again, Tita.",
+        },
+        {
+          label: "Your Thoughtfulness 🌷",
+          msg: "Even from so far away, you always find little ways to let us know we're on your mind. That kind of love is rare, Tita.",
+        },
+        {
+          label: "Your Generosity",
+          msg: "You give so freely and so warmly — not just things, but time, attention, and love. That is the truest kind of generosity, Tita.",
+        },
+        {
+          label: "Your Warmth",
+          msg: "No matter how many kilometers separate us, a message from you always makes everything feel close and warm again.",
+        },
+        {
+          label: "Your Laughter",
+          msg: "When you visit and we're all laughing around the table together — those are the moments we treasure most, Tita.",
+        },
+        {
+          label: "Deux Mondes 💜",
+          msg: "You carry two worlds in your heart — France and the Philippines. And in both, you are so deeply, deeply loved.",
+        },
+        {
+          label: "Your Heart",
+          msg: "A heart as big as yours doesn't shrink with distance. It only grows. We feel it every single day, Tita Elia.",
+        },
+      ];
+
+      const stage = document.getElementById("flowerStage");
+      const msgEl = document.getElementById("petalMsg");
+      const msgText = document.getElementById("petalMsgText");
+      const petalColors = [
+        "#8f6fe8",
+        "#a78bfa",
+        "#c084fc",
+        "#b4a0f5",
+        "#7c3aed",
+        "#9333ea",
+        "#d8b4fe",
+        "#6b3fd4",
+      ];
+
+      petalData.forEach((pd, i) => {
+        const angle = (i / petalData.length) * 360;
+        const p = document.createElement("div");
+        p.className = "flower-petal";
+        p.style.cssText = `background:${petalColors[i]};--rot:${angle}deg;transform:translateX(-50%) translateY(-100%) rotate(${angle}deg)`;
+
+        p.addEventListener("mouseenter", (e) => {
+          msgText.textContent = pd.msg;
+          msgEl.querySelector("strong").textContent = `✨ ${pd.label}`;
+          const rect = stage.getBoundingClientRect();
+          const radAngle = ((angle - 90) * Math.PI) / 180;
+          const r = 110;
+          let cx = 160 + r * Math.cos(radAngle);
+          let cy = 160 + r * Math.sin(radAngle);
+          let left = cx - 110;
+          let top = cy - 60;
+          left = Math.max(0, Math.min(left, 320 - 224));
+          msgEl.style.left = left + "px";
+          msgEl.style.top = top + "px";
+          msgEl.classList.add("visible");
+        });
+
+        p.addEventListener("mouseleave", () => {
+          msgEl.classList.remove("visible");
+        });
+
+        stage.appendChild(p);
+      });
+
+      // Confetti
+      function launchConfetti() {
+        const colors = [
+          "#8f6fe8",
+          "#b4a0f5",
+          "#f9e784",
+          "#e8d5f5",
+          "#c4b5f5",
+          "#a78bfa",
+          "#f0c040",
+          "#d8b4fe",
+        ];
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight * 0.7;
+
+        for (let i = 0; i < 80; i++) {
+          const el = document.createElement("div");
+          el.className = "confetti-particle";
+          const angle = Math.random() * 360;
+          const tx = (Math.random() - 0.5) * window.innerWidth;
+          el.style.cssText = `
+        left:${centerX + (Math.random() - 0.5) * 60}px;
+        top:${centerY}px;
+        background:${colors[Math.floor(Math.random() * colors.length)]};
+        --tx:${tx}px;
+        --dur:${1.2 + Math.random() * 1.8}s;
+        border-radius:${Math.random() > 0.5 ? "50%" : "2px"};
+        width:${6 + Math.random() * 8}px;
+        height:${6 + Math.random() * 8}px;
+        animation-delay:${Math.random() * 0.4}s;
+      `;
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 3500);
+        }
+      }
+
+      // Scroll reveal
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+              const delay = e.target.closest(".wishes-grid")
+                ? Array.from(e.target.parentElement.children).indexOf(
+                    e.target,
+                  ) * 120
+                : 0;
+              setTimeout(() => e.target.classList.add("visible"), delay);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      reveals.forEach((r) => observer.observe(r));
+    </script>
+  </body>
+</html>
