@@ -1,0 +1,1297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Mother's Day, Lola Nini</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --rose: #c0436e;
+        --rose-light: #f5c8d8;
+        --rose-mid: #e8789a;
+        --ink: #3a1628;
+        --soft: #7a3050;
+        --cream: #fff8fb;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--cream);
+        font-family: "DM Sans", sans-serif;
+        color: var(--ink);
+        overflow-x: hidden;
+      }
+
+      canvas#petals-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0 24px 100px;
+      }
+
+      /* HERO */
+      .hero {
+        text-align: center;
+        padding: 60px 0 32px;
+      }
+      .hero-ornament {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .ornament-line {
+        width: 64px;
+        height: 1px;
+        background: var(--rose-light);
+      }
+      .ornament-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--rose-mid);
+      }
+      .ornament-dot.sm {
+        width: 4px;
+        height: 4px;
+        opacity: 0.5;
+      }
+      .subtitle-top {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 15px;
+        letter-spacing: 4px;
+        color: var(--rose-mid);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .main-title {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 300;
+        font-size: clamp(42px, 9vw, 74px);
+        color: var(--rose);
+        line-height: 1.05;
+        margin-bottom: 6px;
+      }
+      .lola-name {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-weight: 600;
+        font-size: clamp(30px, 6vw, 54px);
+        color: var(--soft);
+        line-height: 1.2;
+      }
+
+      .blooming-flower {
+        margin: 34px auto 0;
+        width: 140px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .blooming-flower svg {
+        width: 124px;
+        height: 124px;
+        transition: transform 0.35s ease;
+      }
+      .blooming-flower:hover svg {
+        transform: scale(1.07) rotate(5deg);
+      }
+      .bloom-label {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: var(--rose-mid);
+        text-transform: uppercase;
+      }
+
+      /* DIVIDER */
+      .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 44px 0 32px;
+      }
+      .div-line {
+        flex: 1;
+        height: 0.5px;
+        background: var(--rose-light);
+      }
+      .div-center {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 13px;
+        color: var(--rose-mid);
+        letter-spacing: 2px;
+        white-space: nowrap;
+      }
+
+      /* LETTER */
+      .letter-wrap {
+        background: rgba(255, 255, 255, 0.93);
+        border: 0.5px solid #f0c8d8;
+        border-radius: 22px;
+        padding: 48px 52px;
+        position: relative;
+      }
+      .letter-wrap::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          #e8789a,
+          #c0436e,
+          #e8789a,
+          transparent
+        );
+        border-radius: 22px 22px 0 0;
+      }
+      .letter-para {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 19px;
+        font-weight: 300;
+        line-height: 1.95;
+        color: var(--ink);
+        margin-bottom: 22px;
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .letter-para.shown {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .em {
+        font-style: italic;
+        color: var(--rose);
+        font-weight: 400;
+      }
+      .letter-sign {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 18px;
+        color: var(--rose-mid);
+        text-align: right;
+        margin-top: 28px;
+        opacity: 0;
+        transition: opacity 1s ease 0.4s;
+      }
+      .letter-sign.shown {
+        opacity: 1;
+      }
+
+      /* CARDS */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      @media (max-width: 500px) {
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card-scene {
+        height: 250px;
+        perspective: 1000px;
+        cursor: pointer;
+      }
+      .card-scene:hover .card-inner {
+        transform: rotateY(6deg) scale(1.02);
+      }
+      .card-scene.flipped .card-inner {
+        transform: rotateY(180deg) !important;
+      }
+      .card-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .card-face {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        border-radius: 22px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 28px 20px;
+      }
+      .card-front {
+        background: #fff;
+        border: 0.5px solid #f0c8d8;
+        position: relative;
+        overflow: hidden;
+      }
+      .card-front::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--rose-light);
+        transition: background 0.3s;
+      }
+      .card-scene:hover .card-front::after {
+        background: var(--rose-mid);
+      }
+      .card-scene.flipped .card-front::after {
+        background: var(--rose);
+      }
+
+      .card-back {
+        background: var(--rose);
+        transform: rotateY(180deg);
+        border: 0.5px solid var(--rose);
+      }
+
+      .card-art {
+        width: 100%;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
+      }
+      .card-title {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 16px;
+        color: var(--soft);
+        letter-spacing: 0.3px;
+        text-align: center;
+      }
+      .card-subtitle {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #c8a0b4;
+        text-transform: uppercase;
+        margin-top: 5px;
+        text-align: center;
+      }
+
+      .card-back-quote {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 16.5px;
+        color: #fff;
+        line-height: 1.8;
+        text-align: center;
+      }
+      .card-back-tag {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: rgba(255, 255, 255, 0.55);
+        text-transform: uppercase;
+        margin-top: 16px;
+        text-align: center;
+      }
+
+      .tap-hint {
+        text-align: center;
+        margin-top: 12px;
+        font-size: 12px;
+        color: #c8a0b4;
+        letter-spacing: 1px;
+      }
+
+      /* CANDLE */
+      .candle-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 4px 0 36px;
+      }
+      .candle-outer {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .candle-scene {
+        position: relative;
+        width: 70px;
+        height: 170px;
+        display: flex;
+        align-items: flex-end;
+      }
+      .candle-body {
+        width: 62px;
+        height: 112px;
+        background: #f5d0de;
+        border-radius: 7px 7px 4px 4px;
+        border: 0.5px solid #e8a0bc;
+        position: relative;
+        margin: 0 auto;
+      }
+      .drip1 {
+        position: absolute;
+        top: -8px;
+        left: 10px;
+        width: 13px;
+        height: 19px;
+        background: #faeaf0;
+        border-radius: 0 0 50% 50%;
+        border: 0.5px solid #e8c8d4;
+      }
+      .drip2 {
+        position: absolute;
+        top: -5px;
+        right: 13px;
+        width: 9px;
+        height: 13px;
+        background: #faeaf0;
+        border-radius: 0 0 50% 50%;
+        border: 0.5px solid #e8c8d4;
+      }
+      .wick {
+        position: absolute;
+        top: -27px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 20px;
+        background: var(--ink);
+        border-radius: 2px;
+      }
+      .flame-wrap {
+        position: absolute;
+        bottom: calc(100% + 5px);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .flame-outer {
+        width: 24px;
+        height: 38px;
+        background: #f09ab8;
+        border-radius: 50% 50% 35% 35%;
+        transform-origin: bottom center;
+        animation: flicker 0.9s ease-in-out infinite alternate;
+        position: relative;
+      }
+      .flame-inner {
+        width: 13px;
+        height: 23px;
+        background: #e8789a;
+        border-radius: 50% 50% 30% 30%;
+        position: absolute;
+        bottom: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .flame-core {
+        width: 5px;
+        height: 10px;
+        background: #fff0f5;
+        border-radius: 50% 50% 30% 30%;
+        position: absolute;
+        bottom: 7px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .flame-wrap.out {
+        display: none;
+      }
+      @keyframes flicker {
+        0% {
+          transform: scaleX(1) scaleY(1) rotate(-2deg);
+        }
+        100% {
+          transform: scaleX(0.82) scaleY(1.12) rotate(2deg);
+        }
+      }
+      .candle-glow {
+        position: absolute;
+        bottom: 105%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(232, 120, 154, 0.22) 0%,
+          transparent 70%
+        );
+        animation: glow 0.9s ease-in-out infinite alternate;
+        pointer-events: none;
+      }
+      .candle-glow.out {
+        display: none;
+      }
+      @keyframes glow {
+        0% {
+          opacity: 0.8;
+          transform: translateX(-50%) scale(1);
+        }
+        100% {
+          opacity: 0.35;
+          transform: translateX(-50%) scale(1.25);
+        }
+      }
+      .candle-label {
+        font-size: 12px;
+        letter-spacing: 2px;
+        color: var(--soft);
+        margin-top: 18px;
+        text-align: center;
+      }
+      .relight-btn {
+        margin-top: 12px;
+        background: none;
+        border: 0.5px solid #e8b8cc;
+        border-radius: 30px;
+        padding: 8px 22px;
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 15px;
+        color: var(--rose);
+        cursor: pointer;
+        display: none;
+      }
+      .relight-btn.visible {
+        display: inline-block;
+      }
+      .relight-btn:hover {
+        background: #fce8f0;
+      }
+
+      /* FOOTER */
+      .footer {
+        text-align: center;
+        padding: 44px 0 28px;
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 14px;
+        color: #c8a0b4;
+        letter-spacing: 1px;
+      }
+
+      /* FLOATING HEARTS */
+      .floating-heart {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        font-size: 22px;
+        color: var(--rose-mid);
+        animation: heartRise 2s ease-out forwards;
+        font-family: serif;
+      }
+      @keyframes heartRise {
+        0% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-160px) scale(0.4);
+        }
+      }
+
+      @media (max-width: 500px) {
+        .letter-wrap {
+          padding: 28px 22px;
+        }
+        .letter-para {
+          font-size: 17px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="petals-canvas"></canvas>
+
+    <div class="page">
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-ornament">
+          <div class="ornament-line"></div>
+          <div class="ornament-dot"></div>
+          <div class="ornament-dot sm"></div>
+          <div class="ornament-dot"></div>
+          <div class="ornament-line"></div>
+        </div>
+        <div class="subtitle-top">With all my love</div>
+        <div class="main-title">Happy Mother's Day</div>
+        <div class="lola-name">Lola Nini</div>
+
+        <div
+          class="blooming-flower"
+          onclick="bloomFlower(this)"
+          title="Tap the flower">
+          <svg
+            id="flower-svg"
+            viewBox="0 0 120 120"
+            xmlns="http://www.w3.org/2000/svg">
+            <g id="petals-g" style="transform-origin: 60px 60px">
+              <ellipse
+                cx="60"
+                cy="26"
+                rx="10"
+                ry="20"
+                fill="#f5c8d8"
+                opacity=".92"
+                style="transform-origin: 60px 60px" />
+              <ellipse
+                cx="60"
+                cy="26"
+                rx="10"
+                ry="20"
+                fill="#f5c8d8"
+                opacity=".88"
+                style="transform-origin: 60px 60px; transform: rotate(45deg)" />
+              <ellipse
+                cx="60"
+                cy="26"
+                rx="10"
+                ry="20"
+                fill="#e8a0bc"
+                opacity=".88"
+                style="transform-origin: 60px 60px; transform: rotate(90deg)" />
+              <ellipse
+                cx="60"
+                cy="26"
+                rx="10"
+                ry="20"
+                fill="#f5c8d8"
+                opacity=".92"
+                style="
+                  transform-origin: 60px 60px;
+                  transform: rotate(135deg);
+                " />
+              <ellipse
+                cx="60"
+                cy="26"
+                rx="10"
+                ry="20"
+                fill="#e8a0bc"
+                opacity=".88"
+                style="
+                  transform-origin: 60px 60px;
+                  transform: rotate(180deg);
+                " />
+              <ellipse
+                cx="60"
+                cy="26"
+                rx="10"
+                ry="20"
+                fill="#f5c8d8"
+                opacity=".92"
+                style="
+                  transform-origin: 60px 60px;
+                  transform: rotate(225deg);
+                " />
+              <ellipse
+                cx="60"
+                cy="26"
+                rx="10"
+                ry="20"
+                fill="#e8a0bc"
+                opacity=".88"
+                style="
+                  transform-origin: 60px 60px;
+                  transform: rotate(270deg);
+                " />
+              <ellipse
+                cx="60"
+                cy="26"
+                rx="10"
+                ry="20"
+                fill="#f5c8d8"
+                opacity=".92"
+                style="
+                  transform-origin: 60px 60px;
+                  transform: rotate(315deg);
+                " />
+            </g>
+            <circle cx="60" cy="60" r="20" fill="#c0436e" />
+            <circle cx="60" cy="60" r="12" fill="#e8789a" />
+            <circle cx="60" cy="60" r="5" fill="#fff0f5" />
+            <circle cx="55" cy="56" r="2" fill="rgba(255,255,255,.5)" />
+          </svg>
+          <div class="bloom-label" id="bloomLabel">tap the flower</div>
+        </div>
+      </div>
+
+      <!-- LETTER -->
+      <div class="section-divider">
+        <div class="div-line"></div>
+        <div class="div-center">a letter from the heart</div>
+        <div class="div-line"></div>
+      </div>
+
+      <div class="letter-wrap">
+        <div class="letter-para" id="p1">
+          Thank you for being a part of my family. Not by blood &mdash; but by
+          <span class="em"
+            >love, by choice, by everything that truly matters.</span
+          >
+        </div>
+        <div class="letter-para" id="p2">
+          Madami man pong nagbago sa inyo,
+          <span class="em">thankful pa rin po ako.</span> Marami po akong
+          natutunang lessons sa buhay &mdash; lessons na dala-dala ko hanggang
+          ngayon at lagi kong dala sa tuwing sumusulong ako.
+        </div>
+        <div class="letter-para" id="p3">
+          Sana po ay maramdaman at makita ulit namin yung dating Lola Nini
+          &mdash; ang Lola na
+          <span class="em"
+            >kasama namin sa lungkot, sa saya, sa hirap, at sa ginhawa.</span
+          >
+          Ang Lola na nagmamahal at minahal namin nang buong puso.
+        </div>
+        <div class="letter-para" id="p4">
+          Madami man po tayong misunderstanding &mdash;
+          <span class="em">ikaw pa rin po ang Lola ko.</span> Hindi na po
+          magbabago yon. Kahit kailan. Kahit anong mangyari.
+        </div>
+        <div class="letter-sign" id="lsign">
+          &mdash; With all my love, your apo
+        </div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="section-divider">
+        <div class="div-line"></div>
+        <div class="div-center">moments &amp; memories</div>
+        <div class="div-line"></div>
+      </div>
+
+      <div class="cards-grid">
+        <!-- Card 1: Unconditional love -->
+        <div class="card-scene" onclick="flipCard(this)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-art">
+                <svg
+                  width="94"
+                  height="94"
+                  viewBox="0 0 94 94"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M47 80 C47 80 8 58 8 30 a18 18 0 0 1 39-4 18 18 0 0 1 39 4 c0 28-39 50-39 50z"
+                    fill="#fce0ea"
+                    stroke="#f5c8d8"
+                    stroke-width="1" />
+                  <path
+                    d="M47 68 C47 68 16 51 16 32 a14 14 0 0 1 31-2 14 14 0 0 1 31 2 c0 19-31 36-31 36z"
+                    fill="#f5c8d8"
+                    stroke="#e8a0bc"
+                    stroke-width=".8" />
+                  <path
+                    d="M47 56 C47 56 24 44 24 33 a10 10 0 0 1 23-1 10 10 0 0 1 23 1 c0 11-23 23-23 23z"
+                    fill="#e8789a" />
+                  <circle cx="22" cy="20" r="2.5" fill="#f5c8d8" />
+                  <circle cx="73" cy="17" r="1.8" fill="#e8a0bc" />
+                  <line
+                    x1="69"
+                    y1="26"
+                    x2="69"
+                    y2="31"
+                    stroke="#f5c8d8"
+                    stroke-width="1.2"
+                    stroke-linecap="round" />
+                  <line
+                    x1="66.5"
+                    y1="28.5"
+                    x2="71.5"
+                    y2="28.5"
+                    stroke="#f5c8d8"
+                    stroke-width="1.2"
+                    stroke-linecap="round" />
+                  <line
+                    x1="20"
+                    y1="30"
+                    x2="20"
+                    y2="35"
+                    stroke="#e8a0bc"
+                    stroke-width="1.2"
+                    stroke-linecap="round" />
+                  <line
+                    x1="17.5"
+                    y1="32.5"
+                    x2="22.5"
+                    y2="32.5"
+                    stroke="#e8a0bc"
+                    stroke-width="1.2"
+                    stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="card-title">Unconditional love</div>
+              <div class="card-subtitle">flip to read</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-back-quote">
+                Hindi kailangan ng dugo para maging pamilya. Ang pagmamahal ang
+                nagbubuklod sa atin &mdash; at yoon ang totoo.
+              </div>
+              <div class="card-back-tag">tap again to close</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Life lessons -->
+        <div class="card-scene" onclick="flipCard(this)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-art">
+                <svg
+                  width="94"
+                  height="94"
+                  viewBox="0 0 94 94"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <rect
+                    x="10"
+                    y="28"
+                    width="34"
+                    height="42"
+                    rx="4"
+                    fill="#fce0ea"
+                    stroke="#e8a0bc"
+                    stroke-width=".8" />
+                  <rect
+                    x="50"
+                    y="28"
+                    width="34"
+                    height="42"
+                    rx="4"
+                    fill="#f5c8d8"
+                    stroke="#e8a0bc"
+                    stroke-width=".8" />
+                  <line
+                    x1="44"
+                    y1="28"
+                    x2="44"
+                    y2="70"
+                    stroke="#e8a0bc"
+                    stroke-width="1.5"
+                    stroke-linecap="round" />
+                  <line
+                    x1="17"
+                    y1="39"
+                    x2="40"
+                    y2="39"
+                    stroke="#c8a0b4"
+                    stroke-width=".8"
+                    stroke-linecap="round" />
+                  <line
+                    x1="17"
+                    y1="46"
+                    x2="40"
+                    y2="46"
+                    stroke="#c8a0b4"
+                    stroke-width=".8"
+                    stroke-linecap="round" />
+                  <line
+                    x1="17"
+                    y1="53"
+                    x2="36"
+                    y2="53"
+                    stroke="#c8a0b4"
+                    stroke-width=".8"
+                    stroke-linecap="round" />
+                  <line
+                    x1="17"
+                    y1="60"
+                    x2="40"
+                    y2="60"
+                    stroke="#c8a0b4"
+                    stroke-width=".8"
+                    stroke-linecap="round" />
+                  <line
+                    x1="54"
+                    y1="39"
+                    x2="77"
+                    y2="39"
+                    stroke="#c0436e"
+                    stroke-width=".8"
+                    stroke-linecap="round"
+                    opacity=".45" />
+                  <line
+                    x1="54"
+                    y1="46"
+                    x2="77"
+                    y2="46"
+                    stroke="#c0436e"
+                    stroke-width=".8"
+                    stroke-linecap="round"
+                    opacity=".45" />
+                  <line
+                    x1="54"
+                    y1="53"
+                    x2="73"
+                    y2="53"
+                    stroke="#c0436e"
+                    stroke-width=".8"
+                    stroke-linecap="round"
+                    opacity=".45" />
+                  <line
+                    x1="54"
+                    y1="60"
+                    x2="77"
+                    y2="60"
+                    stroke="#c0436e"
+                    stroke-width=".8"
+                    stroke-linecap="round"
+                    opacity=".45" />
+                  <polygon
+                    points="74,28 79,28 79,48 76.5,44.5 74,48"
+                    fill="#c0436e"
+                    opacity=".65" />
+                  <path
+                    d="M47 14 l2.2 5.5 5.8 0-4.7 3.4 1.8 5.6L47 25l-5.1 3.5 1.8-5.6-4.7-3.4 5.8 0z"
+                    fill="#f5c8d8" />
+                </svg>
+              </div>
+              <div class="card-title">Life lessons</div>
+              <div class="card-subtitle">flip to read</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-back-quote">
+                Every lesson you shared lives inside me. You shaped who I am,
+                even without knowing it &mdash; and I carry that every single
+                day.
+              </div>
+              <div class="card-back-tag">tap again to close</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Through every storm -->
+        <div class="card-scene" onclick="flipCard(this)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-art">
+                <svg
+                  width="94"
+                  height="94"
+                  viewBox="0 0 94 94"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <!-- sun -->
+                  <circle
+                    cx="47"
+                    cy="27"
+                    r="10"
+                    fill="#fce0ea"
+                    stroke="#f5c8d8"
+                    stroke-width=".8" />
+                  <circle cx="47" cy="27" r="5.5" fill="#e8789a" opacity=".7" />
+                  <line
+                    x1="47"
+                    y1="12"
+                    x2="47"
+                    y2="8"
+                    stroke="#f5c8d8"
+                    stroke-width="1.3"
+                    stroke-linecap="round" />
+                  <line
+                    x1="58"
+                    y1="16"
+                    x2="60.5"
+                    y2="13"
+                    stroke="#f5c8d8"
+                    stroke-width="1.3"
+                    stroke-linecap="round" />
+                  <line
+                    x1="62"
+                    y1="27"
+                    x2="66"
+                    y2="27"
+                    stroke="#f5c8d8"
+                    stroke-width="1.3"
+                    stroke-linecap="round" />
+                  <line
+                    x1="58"
+                    y1="38"
+                    x2="60.5"
+                    y2="41"
+                    stroke="#f5c8d8"
+                    stroke-width="1.3"
+                    stroke-linecap="round" />
+                  <line
+                    x1="36"
+                    y1="16"
+                    x2="33.5"
+                    y2="13"
+                    stroke="#f5c8d8"
+                    stroke-width="1.3"
+                    stroke-linecap="round" />
+                  <line
+                    x1="32"
+                    y1="27"
+                    x2="28"
+                    y2="27"
+                    stroke="#f5c8d8"
+                    stroke-width="1.3"
+                    stroke-linecap="round" />
+                  <line
+                    x1="36"
+                    y1="38"
+                    x2="33.5"
+                    y2="41"
+                    stroke="#f5c8d8"
+                    stroke-width="1.3"
+                    stroke-linecap="round" />
+                  <!-- two holding hands -->
+                  <path
+                    d="M20 62 Q18 52 27 47 Q34 44 36 49 L41 62"
+                    fill="#fce0ea"
+                    stroke="#e8a0bc"
+                    stroke-width=".8" />
+                  <path
+                    d="M74 62 Q76 52 65 47 Q58 44 56 49 L53 62"
+                    fill="#fce0ea"
+                    stroke="#e8a0bc"
+                    stroke-width=".8" />
+                  <ellipse
+                    cx="47"
+                    cy="62"
+                    rx="13"
+                    ry="9"
+                    fill="#f5c8d8"
+                    stroke="#e8a0bc"
+                    stroke-width=".8" />
+                  <ellipse
+                    cx="47"
+                    cy="60"
+                    rx="9"
+                    ry="5.5"
+                    fill="#e8789a"
+                    opacity=".55" />
+                </svg>
+              </div>
+              <div class="card-title">Through every storm</div>
+              <div class="card-subtitle">flip to read</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-back-quote">
+                Sa bawat hirap at ginhawa &mdash; nandoon ka. At ang mga
+                sandaling yoon ay hindi ko malilimutan. Hindi ko ikaw
+                malilimutan.
+              </div>
+              <div class="card-back-tag">tap again to close</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Always my Lola -->
+        <div class="card-scene" onclick="flipCard(this)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-art">
+                <svg
+                  width="94"
+                  height="94"
+                  viewBox="0 0 94 94"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <!-- tree trunk -->
+                  <rect
+                    x="42"
+                    y="55"
+                    width="10"
+                    height="26"
+                    rx="3"
+                    fill="#e8a0bc"
+                    opacity=".65" />
+                  <!-- roots -->
+                  <path
+                    d="M47 81 Q39 86 30 84"
+                    stroke="#e8a0bc"
+                    stroke-width="1.3"
+                    fill="none"
+                    stroke-linecap="round"
+                    opacity=".55" />
+                  <path
+                    d="M47 81 Q55 86 64 84"
+                    stroke="#e8a0bc"
+                    stroke-width="1.3"
+                    fill="none"
+                    stroke-linecap="round"
+                    opacity=".55" />
+                  <!-- canopy -->
+                  <circle
+                    cx="47"
+                    cy="40"
+                    r="24"
+                    fill="#fce0ea"
+                    stroke="#f5c8d8"
+                    stroke-width=".8" />
+                  <circle
+                    cx="47"
+                    cy="36"
+                    r="18"
+                    fill="#f5c8d8"
+                    stroke="#e8a0bc"
+                    stroke-width=".8" />
+                  <circle cx="47" cy="32" r="12" fill="#e8789a" opacity=".7" />
+                  <!-- heart on tree -->
+                  <path
+                    d="M47 24 C47 24 42 19 42 16 a4.5 4.5 0 0 1 5 1.5 4.5 4.5 0 0 1 5-1.5 c0 3-5 8-5 8z"
+                    fill="#fff"
+                    opacity=".75" />
+                  <!-- two figures -->
+                  <circle
+                    cx="38"
+                    cy="53"
+                    r="4"
+                    fill="#f5c8d8"
+                    stroke="#e8a0bc"
+                    stroke-width=".5" />
+                  <circle
+                    cx="56"
+                    cy="53"
+                    r="4"
+                    fill="#f5c8d8"
+                    stroke="#e8a0bc"
+                    stroke-width=".5" />
+                  <path
+                    d="M33 62 Q38 57 43 62"
+                    stroke="#e8a0bc"
+                    stroke-width="1.1"
+                    fill="none"
+                    stroke-linecap="round" />
+                  <path
+                    d="M51 62 Q56 57 61 62"
+                    stroke="#e8a0bc"
+                    stroke-width="1.1"
+                    fill="none"
+                    stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="card-title">Always my Lola</div>
+              <div class="card-subtitle">flip to read</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-back-quote">
+                Kahit anong pagbabago &mdash;
+                <em>ikaw pa rin ang Lola ko.</em> That bond is rooted deep and
+                nothing can ever undo it.
+              </div>
+              <div class="card-back-tag">tap again to close</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tap-hint">tap each card to reveal a message</div>
+
+      <!-- CANDLE -->
+      <div class="section-divider">
+        <div class="div-line"></div>
+        <div class="div-center">light a candle for Lola</div>
+        <div class="div-line"></div>
+      </div>
+
+      <div class="candle-section">
+        <div
+          class="candle-outer"
+          id="candleOuter"
+          onclick="blowCandle()"
+          title="Click to blow out">
+          <div class="candle-scene">
+            <div class="candle-glow" id="candleGlow"></div>
+            <div class="candle-body">
+              <div class="drip1"></div>
+              <div class="drip2"></div>
+              <div class="wick"></div>
+              <div class="flame-wrap" id="flameWrap">
+                <div class="flame-outer">
+                  <div class="flame-inner">
+                    <div class="flame-core"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="candle-label" id="candleLabel">click to blow out</div>
+        <button class="relight-btn" id="relightBtn" onclick="relightCandle()">
+          relight the candle
+        </button>
+      </div>
+
+      <div class="footer">
+        Made with love &mdash; para sa pinaka-espesyal na Lola ko
+      </div>
+    </div>
+
+    <script>
+      /* FALLING PETALS */
+      (function () {
+        const canvas = document.getElementById("petals-canvas");
+        const ctx = canvas.getContext("2d");
+        let petals = [];
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+        function makePetal() {
+          const cols = [
+            "#f9c8d8",
+            "#f7a8c0",
+            "#fce0ea",
+            "#e8a0bc",
+            "#f4b8cc",
+            "#fad4e4",
+          ];
+          return {
+            x: Math.random() * canvas.width,
+            y: -20,
+            size: Math.random() * 11 + 7,
+            rot: Math.random() * 360,
+            rotSpeed: (Math.random() - 0.5) * 2.2,
+            speedY: Math.random() * 1.1 + 0.45,
+            speedX: (Math.random() - 0.5) * 0.55,
+            color: cols[Math.floor(Math.random() * cols.length)],
+            opacity: Math.random() * 0.42 + 0.22,
+            sway: Math.random() * 2.5,
+            swayT: Math.random() * Math.PI * 2,
+          };
+        }
+        for (let i = 0; i < 22; i++) {
+          petals.push(makePetal());
+          petals[i].y = Math.random() * window.innerHeight;
+        }
+        function drawPetal(p) {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rot * Math.PI) / 180);
+          ctx.globalAlpha = p.opacity;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size * 0.42, p.size, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+        let lastTime = 0;
+        function animate(ts) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const dt = Math.min((ts - lastTime) / 16, 3);
+          lastTime = ts;
+          petals.forEach((p) => {
+            p.swayT += 0.018 * dt;
+            p.x += p.speedX * dt + Math.sin(p.swayT) * p.sway * 0.3;
+            p.y += p.speedY * dt;
+            p.rot += p.rotSpeed * dt;
+            if (p.y > canvas.height + 30) {
+              Object.assign(p, makePetal());
+              p.y = -20;
+            }
+            drawPetal(p);
+          });
+          requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+      })();
+
+      /* LETTER REVEAL */
+      setTimeout(() => {
+        ["p1", "p2", "p3", "p4"].forEach((id, i) => {
+          setTimeout(
+            () => document.getElementById(id).classList.add("shown"),
+            i * 520 + 300,
+          );
+        });
+        setTimeout(
+          () => document.getElementById("lsign").classList.add("shown"),
+          4 * 520 + 700,
+        );
+      }, 400);
+
+      /* FLOWER BLOOM */
+      let bloomed = false;
+      function bloomFlower(el) {
+        if (bloomed) return;
+        bloomed = true;
+        const g = document.getElementById("petals-g");
+        g.style.transition = "transform .65s cubic-bezier(.34,1.56,.64,1)";
+        g.style.transform = "scale(1.3)";
+        document.getElementById("bloomLabel").textContent = "in full bloom";
+        const rect = el.getBoundingClientRect();
+        for (let i = 0; i < 7; i++) {
+          setTimeout(() => {
+            const h = document.createElement("div");
+            h.className = "floating-heart";
+            h.style.left =
+              rect.left +
+              rect.width / 2 -
+              11 +
+              (Math.random() - 0.5) * 55 +
+              "px";
+            h.style.top = rect.top + rect.height / 2 + "px";
+            h.style.fontSize = 13 + Math.random() * 18 + "px";
+            h.innerHTML = "&#9825;";
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 2100);
+          }, i * 130);
+        }
+      }
+
+      /* CARDS 3D FLIP */
+      function flipCard(scene) {
+        scene.classList.toggle("flipped");
+      }
+
+      /* CANDLE */
+      let lit = true;
+      function blowCandle() {
+        if (!lit) return;
+        lit = false;
+        document.getElementById("flameWrap").classList.add("out");
+        document.getElementById("candleGlow").classList.add("out");
+        document.getElementById("candleLabel").textContent =
+          "the candle is out";
+        document.getElementById("relightBtn").classList.add("visible");
+        document.getElementById("candleOuter").style.cursor = "default";
+      }
+      function relightCandle() {
+        lit = true;
+        document.getElementById("flameWrap").classList.remove("out");
+        document.getElementById("candleGlow").classList.remove("out");
+        document.getElementById("candleLabel").textContent =
+          "click to blow out";
+        document.getElementById("relightBtn").classList.remove("visible");
+        document.getElementById("candleOuter").style.cursor = "pointer";
+      }
+    </script>
+  </body>
+</html>
